@@ -11,9 +11,10 @@ WITH src_addresses AS (
 
 renamed_casted AS (
     SELECT
-        address
-        ,MD5(CONCAT(country, state, address)) AS zipcode_id
-        ,address_id
+        MD5(CONCAT(country, state, address)) AS zipcode_id
+        ,country
+        ,state
+        ,address
         , _fivetran_synced AS date_load
     FROM src_addresses
     )

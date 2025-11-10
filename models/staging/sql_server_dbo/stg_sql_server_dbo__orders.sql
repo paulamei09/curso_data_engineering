@@ -16,10 +16,9 @@ renamed_casted AS (
         , estimated_delivery_at
         , order_cost
         , order_id
-        , order_total
         , MD5(LOWER(REPLACE(REPLACE(promo_id, '-', '_'), ' ', '_'))) AS promo_id
         , shipping_cost
-        , shipping_service
+        , MD5(shipping_service) as shipping_service_id
         , status
         , tracking_id
         , user_id

@@ -15,7 +15,7 @@ renamed_casted AS (
         , price as unit_price_usd
         , name as product_name
         , inventory
-        , _fivetran_synced AS date_load
+        , CONVERT_TIMEZONE ('UTC',_fivetran_synced ) AS date_load
     FROM src_products
     )
 

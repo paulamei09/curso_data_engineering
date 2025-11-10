@@ -11,14 +11,10 @@ sources:
       schema: false
       identifier: false
 
-    freshness:
-      warn_after: {count: 24, period: hour}
-      error_after: {count: 48, period: hour}
 
     tables:
 
       - name: addresses
-        loaded_at_field: _fivetran_synced
         columns:
           - name: address_id
           - name: zipcode
@@ -27,8 +23,9 @@ sources:
           - name: state
           - name: _fivetran_deleted
           - name: _fivetran_synced
+        config:
+          loaded_at_field: _fivetran_synced
       - name: events
-        loaded_at_field: _fivetran_synced
         columns:
           - name: event_id
           - name: page_url
@@ -40,8 +37,9 @@ sources:
           - name: order_id
           - name: _fivetran_deleted
           - name: _fivetran_synced
+        config:
+          loaded_at_field: _fivetran_synced
       - name: products
-        loaded_at_field: _fivetran_synced
         columns:
           - name: product_id
           - name: price
@@ -49,8 +47,9 @@ sources:
           - name: inventory
           - name: _fivetran_deleted
           - name: _fivetran_synced
+        config:
+          loaded_at_field: _fivetran_synced
       - name: orders
-        loaded_at_field: _fivetran_synced
         columns:
           - name: order_id
           - name: shipping_service
@@ -67,24 +66,46 @@ sources:
           - name: status
           - name: _fivetran_deleted
           - name: _fivetran_synced
+        config:
+          loaded_at_field: _fivetran_synced
       - name: order_items
-        loaded_at_field: _fivetran_synced
         columns:
           - name: order_id
           - name: product_id
           - name: quantity
           - name: _fivetran_deleted
           - name: _fivetran_synced
+        config:
+          loaded_at_field: _fivetran_synced
       - name: promos
-        loaded_at_field: _fivetran_synced
+        description: >
+          Data about all promos in demo.
         columns:
           - name: promo_id
+            description: >
+              MD5 for each unique promo on platform.
+            data_tests:
+              - not_null
+              - unique
           - name: discount
+            description: >
+              Total discount in absolute value.
+            data_tests:
+              - not_null
+              - positive_values
           - name: status
+            description: >
+              If the promo is active or inactive.
+            data_tests:
+              - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
+            data_tests:
+              - not_null
+
+        config:
+          loaded_at_field: _fivetran_synced
       - name: users
-        loaded_at_field: _fivetran_synced
         columns:
           - name: user_id
           - name: updated_at
@@ -97,3 +118,9 @@ sources:
           - name: email
           - name: _fivetran_deleted
           - name: _fivetran_synced
+        config:
+          loaded_at_field: _fivetran_synced
+    config:
+      freshness:
+        warn_after: {count: 24, period: hour}
+        error_after: {count: 48, period: hour}
