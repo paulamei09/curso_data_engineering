@@ -14,6 +14,7 @@ renamed_casted AS (
           address_id
         , created_at
         , email
+        , coalesce (regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address
         , first_name
         , last_name
         , phone_number

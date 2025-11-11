@@ -4,8 +4,85 @@ sources:
   - name: sql_server_dbo
     description: ""
     database: alumno26_dev_bronze_db
-    schema: sql_server_dbo
     tables:
+      - name: addresses
+        description: ""
+        columns:
+          - name: address_id
+            data_type: varchar
+            description: ""
+          - name: zipcode
+            data_type: number
+            description: ""
+          - name: country
+            data_type: varchar
+            description: ""
+          - name: address
+            data_type: varchar
+            description: ""
+          - name: state
+            data_type: varchar
+            description: ""
+          - name: _fivetran_deleted
+            data_type: boolean
+            description: ""
+          - name: _fivetran_synced
+            data_type: timestamp_tz
+            description: ""
+
+      - name: events
+        description: ""
+        columns:
+          - name: event_id
+            data_type: varchar
+            description: ""
+          - name: page_url
+            data_type: varchar
+            description: ""
+          - name: event_type
+            data_type: varchar
+            description: ""
+          - name: user_id
+            data_type: varchar
+            description: ""
+          - name: product_id
+            data_type: varchar
+            description: ""
+          - name: session_id
+            data_type: varchar
+            description: ""
+          - name: created_at
+            data_type: timestamp_ntz
+            description: ""
+          - name: order_id
+            data_type: varchar
+            description: ""
+          - name: _fivetran_deleted
+            data_type: boolean
+            description: ""
+          - name: _fivetran_synced
+            data_type: timestamp_tz
+            description: ""
+
+      - name: order_items
+        description: ""
+        columns:
+          - name: order_id
+            data_type: varchar
+            description: ""
+          - name: product_id
+            data_type: varchar
+            description: ""
+          - name: quantity
+            data_type: number
+            description: ""
+          - name: _fivetran_deleted
+            data_type: boolean
+            description: ""
+          - name: _fivetran_synced
+            data_type: timestamp_tz
+            description: ""
+
       - name: orders
         description: ""
         columns:
@@ -55,17 +132,76 @@ sources:
             data_type: timestamp_tz
             description: ""
 
-      - name: order_items
+      - name: products
         description: ""
         columns:
-          - name: order_id
-            data_type: varchar
-            description: ""
           - name: product_id
             data_type: varchar
             description: ""
-          - name: quantity
+          - name: price
+            data_type: float
+            description: ""
+          - name: name
+            data_type: varchar
+            description: ""
+          - name: inventory
             data_type: number
+            description: ""
+          - name: _fivetran_deleted
+            data_type: boolean
+            description: ""
+          - name: _fivetran_synced
+            data_type: timestamp_tz
+            description: ""
+
+      - name: promos
+        description: ""
+        columns:
+          - name: promo_id
+            data_type: varchar
+            description: ""
+          - name: discount
+            data_type: number
+            description: ""
+          - name: status
+            data_type: varchar
+            description: ""
+          - name: _fivetran_deleted
+            data_type: boolean
+            description: ""
+          - name: _fivetran_synced
+            data_type: timestamp_tz
+            description: ""
+
+      - name: users
+        description: ""
+        columns:
+          - name: user_id
+            data_type: varchar
+            description: ""
+          - name: updated_at
+            data_type: timestamp_tz
+            description: ""
+          - name: address_id
+            data_type: varchar
+            description: ""
+          - name: last_name
+            data_type: varchar
+            description: ""
+          - name: created_at
+            data_type: timestamp_tz
+            description: ""
+          - name: phone_number
+            data_type: varchar
+            description: ""
+          - name: total_orders
+            data_type: number
+            description: ""
+          - name: first_name
+            data_type: varchar
+            description: ""
+          - name: email
+            data_type: varchar
             description: ""
           - name: _fivetran_deleted
             data_type: boolean

@@ -14,7 +14,7 @@ renamed_casted AS (
         address
         ,MD5(CONCAT(country, state, address)) AS zipcode_id
         ,address_id
-        , _fivetran_synced AS date_load
+        ,_fivetran_synced AS date_load
     FROM src_addresses
     )
 

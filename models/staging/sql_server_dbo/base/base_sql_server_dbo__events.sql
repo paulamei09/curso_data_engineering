@@ -13,7 +13,7 @@ renamed_casted AS (
     SELECT
           created_at
         , event_id
-        , event_type
+        , MD5(event_type) AS event_type_id
         , order_id
         , page_url
         , product_id
