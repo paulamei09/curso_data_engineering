@@ -36,12 +36,30 @@ models:
   curso_data_engineering:
     staging:
       +materialized: view
+      +database: "{{ env_var('DBT_ENVIRONMENTS') }}_SILVER_DB"
     # Applies to all files under models/example/
-    example:
+    google_sheets:
+        +schema: google_sheets
+    sql_server_dbo:
+        +schema: sql_server_dbo
+
+    marts:
       +materialized: table
+      +database: "{{ env_var('DBT_ENVIRONMENTS') }}_GOLD_DB"
+      core:
+        +schema: core
 
 seeds:
-  +database: "ALUMNO26_DEV_BRONZE_DB"
+  +database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"
   +schema: "SEEDS"
+
+snapshots:
+  +transient: false
+  +target_database: "{{ env_var('DBT_ENVIRONMENTS') }}_SILVER_DB"
+  +target_schema: snapshots
+  
 flags:
   require_generic_test_arguments_property: true
+
+on-run-start:
+  - "ALTER WAREHOUSE WH_CURSO_DATA_ENGINEERING RESUME IF SUSPENDED;"

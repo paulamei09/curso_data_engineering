@@ -1,0 +1,249 @@
+version: 2
+
+sources:
+
+  - name: sql_server_dbo
+    schema: sql_server_dbo
+    database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    tables:
+
+      - name: addresses
+        description: ""
+          
+        columns:
+          - name: address_id
+            description: >
+              Unique identificator for every address
+            data_tests:
+              - not_null
+              - unique
+          - name: zipcode
+            description: >
+              All the zipcodes from the addresses
+            data_tests:
+              - not_null
+          - name: country
+            description: >
+              All the countries involved
+            data_tests:
+              - not_null
+          - name: state
+            description: >
+              All the states involved from the countries
+          - name: address
+            description: >
+              The addresses indeed
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+            data_tests:
+              - not_null
+        config:
+          loaded_at_field: _fivetran_synced
+
+      - name: events
+        description: >
+          Every click/action the user does in the web
+        columns:
+          - name: event_id
+            description: >
+              Unique identificator for every address
+            data_tests:
+              - not_null
+              - unique
+          - name: page_url
+            description: >
+              URL to every event involved
+          - name: event_type
+            description: >
+              Type of action the user does
+            data_tests:
+              - not_null
+          - name: user_id
+            description: >
+              The user who did the action
+          - name: product_id
+            description: >
+              The product in wich the action is done
+          - name: session_id
+            description: >
+              Session in wich the action is done
+          - name: created_at
+            description: >
+              When the action was done
+            data_tests:
+              - not_null
+          - name: order_id
+            description: >
+              The order in wich when the action involves it
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+            data_tests:
+              - not_null
+        config:
+          loaded_at_field: _fivetran_synced
+
+      - name: products
+        description: ""
+        columns:
+          - name: product_id
+            description: ""
+            data_tests:
+              - not_null
+              - unique
+          - name: price
+            description: ""
+            data_tests:
+              - not_null
+              - positive_values
+          - name: name
+            description: ""
+            data_tests:
+              - not_null
+          - name: inventory
+            description: ""
+            data_tests:
+              - not_null
+              - positive_values
+          - name: _fivetran_deleted
+            description: ""
+          - name: _fivetran_synced
+            description: ""
+            data_tests:
+              - not_null
+        config:
+          loaded_at_field: _fivetran_synced
+
+      - name: orders
+        description: ""
+        columns:
+          - name: order_id
+            description: ""
+            data_tests:
+              - not_null
+              - unique
+          - name: user_id
+            description: ""
+            data_tests:
+              - not_null
+          - name: order_total
+            description: ""
+            data_tests:
+              - not_null
+              - positive_values
+          - name: order_cost
+            description: ""
+            data_tests:
+              - not_null
+              - positive_values
+          - name: shipping_cost
+            description: ""
+            data_tests:
+              - positive_values
+          - name: shipping_service
+            description: ""
+          - name: address_id
+            description: ""
+          - name: created_at
+            description: ""
+            data_tests:
+              - not_null
+          - name: promo_id
+            description: ""
+          - name: status
+            description: ""
+            data_tests:
+              - not_null
+          - name: delivered_at
+            description: ""
+          - name: tracking_id
+            description: ""
+          - name: estimated_delivery_at
+            description: ""
+          - name: _fivetran_deleted
+            description: ""
+          - name: _fivetran_synced
+            description: ""
+            data_tests:
+              - not_null
+        config:
+          loaded_at_field: _fivetran_synced
+
+      - name: order_items
+        description: ""
+        columns:
+          - name: order_id
+            description: ""
+            data_tests:
+              - not_null
+          - name: product_id
+            description: ""
+            data_tests:
+              - not_null
+          - name: quantity
+            description: ""
+            data_tests:
+              - not_null
+              - positive_values
+          - name: _fivetran_deleted
+            description: ""
+          - name: _fivetran_synced
+            description: ""
+            data_tests:
+              - not_null
+        config:
+          loaded_at_field: _fivetran_synced
+
+      - name: promos
+        description: >
+          Data about all promos in demo.
+        columns:
+          - name: promo_id
+            description: >
+              MD5 for each unique promo on platform.
+            data_tests:
+              - not_null
+              - unique
+          - name: discount
+            description: >
+              Total discount in absolute value.
+            data_tests:
+              - not_null
+              - positive_values
+          - name: status
+            description: >
+              If the promo is active or inactive.
+            data_tests:
+              - not_null
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+            data_tests:
+              - not_null
+        config:
+          loaded_at_field: _fivetran_synced
+
+      - name: users
+        columns:
+          - name: user_id
+          - name: updated_at
+          - name: address_id
+          - name: last_name
+          - name: created_at
+          - name: phone_number
+          - name: total_orders
+          - name: first_name
+          - name: email
+          - name: _fivetran_deleted
+          - name: _fivetran_synced
+        config:
+          loaded_at_field: _fivetran_synced
+          
+    config:
+      freshness:
+        warn_after: {count: 24, period: hour}
+        error_after: {count: 48, period: hour}

@@ -19,6 +19,7 @@ renamed_casted AS (
         , MD5(LOWER(REPLACE(REPLACE(promo_id, '-', '_'), ' ', '_'))) AS promo_id
         , shipping_cost
         , COALESCE(NULLIF(SHIPPING_SERVICE, ''), 'no_shipping') AS shipping_service
+        , MD5(status) AS status_id
         , status
         , tracking_id
         , user_id
